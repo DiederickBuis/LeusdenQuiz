@@ -698,17 +698,16 @@ function ptInPoly(lat, lng, coords) {
 
 /* ── SCHERMTRANSITIES ── */
 function toonScherm(id) {
+  const target = $(id);
   document.querySelectorAll('.scherm').forEach(s => {
+    if (s === target) return;
     s.classList.remove('in');
     setTimeout(() => s.classList.remove('actief'), 500);
   });
-  setTimeout(() => {
-    const el = $(id);
-    el.classList.add('actief');
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => el.classList.add('in'));
-    });
-  }, 80);
+  target.classList.add('actief');
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => target.classList.add('in'));
+  });
 }
 
 /* ── KAART INITIALISATIE ── */
