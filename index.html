@@ -274,6 +274,7 @@ html, body {
 
 /* Leaflet overrides */
 .leaflet-tile-pane { filter: saturate(0.85) brightness(0.9); }
+.osm-dark-tiles { filter: invert(1) hue-rotate(180deg) brightness(0.8) contrast(1.1) saturate(0.3); }
 .leaflet-popup-content-wrapper {
   background: var(--ink2) !important;
   color: var(--cream) !important;
@@ -720,11 +721,27 @@ function initKaart() {
 
   L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_matter/{z}/{x}/{y}.png', {
+  // Probeer CartoDB dark_all via Fastly CDN, met OSM+invert als fallback
+  const darkTiles = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
     subdomains: 'abcd',
-    maxZoom: 18,
+    maxZoom: 19,
     attribution: '&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
-  }).addTo(map);
+  });
+
+  const osmTiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    subdomains: 'abc',
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    className: 'osm-dark-tiles'
+  });
+
+  darkTiles.on('tileerror', function() {
+    if (!map.hasLayer(osmTiles)) {
+      map.removeLayer(darkTiles);
+      osmTiles.addTo(map);
+    }
+  });
+  darkTiles.addTo(map);
 
   WIJK_POLYGONEN.forEach(w => {
     const poly = L.polygon(w.coords, {
