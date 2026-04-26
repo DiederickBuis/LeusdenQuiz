@@ -247,6 +247,7 @@ html, body {
 .kaart-paneel.actief { display: block; }
 #kaart-container {
   width: 100%; height: 100%;
+  background: #0d1117;
 }
 .kaart-instructie {
   position: absolute; bottom: 20px; left: 50%;
@@ -714,15 +715,15 @@ function toonScherm(id) {
 function initKaart() {
   if (map) return;
   map = L.map('kaart-container', {
-    zoomControl: false,
-    attributionControl: false
+    zoomControl: false
   }).setView([52.132, 5.420], 13);
 
   L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_matter/{z}/{x}/{y}{r}.png', {
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_matter/{z}/{x}/{y}.png', {
     subdomains: 'abcd',
-    maxZoom: 18
+    maxZoom: 18,
+    attribution: '&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
   }).addTo(map);
 
   WIJK_POLYGONEN.forEach(w => {
