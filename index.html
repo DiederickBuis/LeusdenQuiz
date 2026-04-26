@@ -521,23 +521,23 @@ html, body {
 /* ── DATA ── */
 const WIJK_POLYGONEN = [
   { naam:"Leusden-Centrum West", kleur:"#c9a84c",
-    coords:[[52.135,5.395],[52.135,5.420],[52.118,5.420],[52.118,5.395]],
-    lat:52.1245, lng:5.4155 },
+    coords:[[52.142,5.400],[52.142,5.437],[52.122,5.437],[52.122,5.400]],
+    lat:52.132, lng:5.418 },
   { naam:"Leusden-Centrum Oost", kleur:"#e8a83a",
-    coords:[[52.135,5.420],[52.135,5.447],[52.118,5.447],[52.118,5.420]],
-    lat:52.1265, lng:5.4310 },
+    coords:[[52.132,5.437],[52.132,5.468],[52.108,5.468],[52.108,5.437]],
+    lat:52.120, lng:5.452 },
   { naam:"Leusden-Zuid", kleur:"#7ab87a",
-    coords:[[52.118,5.400],[52.118,5.440],[52.098,5.440],[52.098,5.400]],
-    lat:52.1080, lng:5.4180 },
+    coords:[[52.125,5.340],[52.125,5.405],[52.090,5.405],[52.090,5.340]],
+    lat:52.108, lng:5.372 },
   { naam:"'t Ruige Veld", kleur:"#7ab0c8",
-    coords:[[52.152,5.388],[52.152,5.428],[52.135,5.428],[52.135,5.388]],
-    lat:52.1430, lng:5.4080 },
+    coords:[[52.152,5.400],[52.152,5.460],[52.142,5.460],[52.142,5.400]],
+    lat:52.147, lng:5.430 },
   { naam:"Achterveld", kleur:"#c8a07a",
-    coords:[[52.158,5.440],[52.158,5.482],[52.135,5.482],[52.135,5.440]],
-    lat:52.1460, lng:5.4610 },
+    coords:[[52.160,5.468],[52.160,5.520],[52.112,5.520],[52.112,5.468]],
+    lat:52.136, lng:5.494 },
   { naam:"Stoutenburg", kleur:"#a08870",
-    coords:[[52.172,5.362],[52.172,5.394],[52.145,5.394],[52.145,5.362]],
-    lat:52.1580, lng:5.3800 },
+    coords:[[52.170,5.400],[52.170,5.460],[52.152,5.460],[52.152,5.400]],
+    lat:52.161, lng:5.430 },
 ];
 
 const ALLE_VRAGEN = [
@@ -545,31 +545,31 @@ const ALLE_VRAGEN = [
   { type:'kaart', badge:'🎯 Wijs de wijk aan',
     tekst:'Waar ligt de wijk <em>Rozendaal</em> (de Eurowoningen)?',
     hint:'Deze wijk uit de jaren \'70 ligt in het westelijk centrum. De pleinen zijn vernoemd naar Europese landstreken.',
-    doelWijk:'Leusden-Centrum West', kaartZoom:13, kaartCenter:[52.1245,5.4155],
+    doelWijk:'Leusden-Centrum West', kaartZoom:13, kaartCenter:[52.132,5.418],
     uitleg:'Rozendaal valt onder Leusden-Centrum West — ontworpen door architect Henk Klunder met 12 Europees vernoemde pleinen.' },
 
   { type:'kaart', badge:'🎯 Wijs de wijk aan',
     tekst:'In welke wijk vind je de buurt <em>\'t Vliet</em>?',
     hint:'Deze wijk grenst aan Amersfoort in het noorden.',
-    doelWijk:"'t Ruige Veld", kaartZoom:13, kaartCenter:[52.143,5.408],
+    doelWijk:"'t Ruige Veld", kaartZoom:13, kaartCenter:[52.140,5.430],
     uitleg:"'t Vliet is een buurt binnen 't Ruige Veld — de meest noordelijke wijk, grenzend aan Amersfoort." },
 
   { type:'kaart', badge:'🎯 Wijs de wijk aan',
     tekst:'Klik op <em>Leusden-Zuid</em>, waar Tabaksteeg en de Grift liggen.',
     hint:'De meest zuidelijke stadswijk, grenzend aan het open buitengebied.',
-    doelWijk:'Leusden-Zuid', kaartZoom:13, kaartCenter:[52.108,5.418],
+    doelWijk:'Leusden-Zuid', kaartZoom:13, kaartCenter:[52.108,5.372],
     uitleg:'Leusden-Zuid (vroeger Leusbroek) omvat nieuwbouwwijk Tabaksteeg (2012) en wordt doorkruist door rivier de Grift.' },
 
   { type:'kaart', badge:'🎯 Wijs de wijk aan',
     tekst:'Waar ligt <em>Achterveld</em>, het agrarische dorp in het Gelderse Dal?',
     hint:'Zoek het verste punt naar het oosten op de kaart.',
-    doelWijk:'Achterveld', kaartZoom:13, kaartCenter:[52.146,5.461],
+    doelWijk:'Achterveld', kaartZoom:13, kaartCenter:[52.136,5.494],
     uitleg:'Achterveld is een agrarisch dorp in het Gelderse Dal, voor het eerst vermeld in 1382.' },
 
   { type:'kaart', badge:'🎯 Wijs de wijk aan',
     tekst:'Wijs <em>Stoutenburg</em> aan — het bosrijke buurtschap op de Heuvelrug.',
     hint:'Het meest westelijke, landelijkste deel van de gemeente.',
-    doelWijk:'Stoutenburg', kaartZoom:13, kaartCenter:[52.158,5.380],
+    doelWijk:'Stoutenburg', kaartZoom:13, kaartCenter:[52.155,5.430],
     uitleg:'Stoutenburg ligt op de Utrechtse Heuvelrug, vernoemd naar het middeleeuwse kasteel (toneel van de Muykerij, 1623).' },
 
   // ── MC: BUURTEN ──
@@ -716,12 +716,12 @@ function initKaart() {
   if (map) return;
   map = L.map('kaart-container', {
     zoomControl: false
-  }).setView([52.132, 5.420], 13);
+  }).setView([52.132, 5.430], 12);
 
   L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-  // Probeer CartoDB dark_all via Fastly CDN, met OSM+invert als fallback
-  const darkTiles = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
+  // CartoDB Positron (lichte kaart) met OSM als fallback
+  const lightTiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
     subdomains: 'abcd',
     maxZoom: 19,
     attribution: '&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
@@ -730,17 +730,16 @@ function initKaart() {
   const osmTiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     subdomains: 'abc',
     maxZoom: 19,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    className: 'osm-dark-tiles'
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   });
 
-  darkTiles.on('tileerror', function() {
+  lightTiles.on('tileerror', function() {
     if (!map.hasLayer(osmTiles)) {
-      map.removeLayer(darkTiles);
+      map.removeLayer(lightTiles);
       osmTiles.addTo(map);
     }
   });
-  darkTiles.addTo(map);
+  lightTiles.addTo(map);
 
   WIJK_POLYGONEN.forEach(w => {
     const poly = L.polygon(w.coords, {
